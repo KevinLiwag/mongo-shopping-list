@@ -18,8 +18,10 @@ router.post('/items', function(req, res){
 	});
 });
 
-router.put();
-
+router.put('/items/:id', jsonParser, function(req, res){
+	//how to make work?!
+});
+	
 router.delete();
 
 module.exports = router;
