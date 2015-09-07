@@ -1,0 +1,29 @@
+{
+  "name": "mongo-shopping-list",
+  "version": "1.0.0",
+  "description": "Shopping List with Mongo",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Azure8705/mongo-shopping-list.git"
+  },
+  "author": "Kevin Liwag",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Azure8705/mongo-shopping-list/issues"
+  },
+  "homepage": "https://github.com/Azure8705/mongo-shopping-list#readme",
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.13.3",
+    "mongoose": "^4.1.5"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "chai-http": "^1.0.0",
+    "mocha": "^2.3.1"
+  }
+}
