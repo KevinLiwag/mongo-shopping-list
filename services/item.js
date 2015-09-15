@@ -25,9 +25,21 @@ exports.list = function(callback, errback) {
 //update item from db
 exports.update = function(name, callback, errback) {
 	Item.findOneAndUpdate({name: name}, function(err, item){
-		if (err || !item) {
-			console.error("Could not update item", name);
+		if (err) {
+			errback(err);
+			return;
 		}
 		callback(item);
+	});
+};
+
+//delete item from db
+exports.delete = function(name, callback, errback) {
+	Item.findAndRemove({name: name}, function(err, result){
+		if (err) {
+			errback(err);
+			return;
+		}
+		
 	});
 };

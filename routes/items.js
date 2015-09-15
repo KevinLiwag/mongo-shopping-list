@@ -18,10 +18,16 @@ router.post('/items', function(req, res){
 	});
 });
 
-router.put('/items/:id', jsonParser, function(req, res){
-	//how to make work?!
+router.put('/items/:id', jsonParser, function(req, res){ 
+	Item.update(req.body.name, function(item){
+		res.status(202).json(item);
+	}, function(err) {
+		res.status(404).json(err);
+	});
 });
 	
-router.delete();
+router.delete('/items/:id', function(req, res){
+	Item.delete()
+});
 
 module.exports = router;
