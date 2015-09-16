@@ -1,45 +1,31 @@
 var Item = require('../models/item');
 
 //add items from db
-exports.save = function(name, callback, errback) {
+exports.save = function(name, callback) {
 	Item.create({ name: name}, function(err, item) {
-		if (err) {
-			errback(err);
-			return;
-		}
-		callback(item);
+		callback(err, item);
 	});
 };
 
 //fetch items from db
-exports.list = function(callback, errback) {
+exports.list = function(callback) {
 	Item.find(function(err, items){
-		if (err) {
-			errback(err);
-			return;
-		}
-		callback(items);
+		if (err) return callback(err)
+
+		callback(null, items);
 	});
 };
 
 //update item from db
-exports.update = function(name, callback, errback) {
-	Item.findOneAndUpdate({name: name}, function(err, item){
-		if (err) {
-			errback(err);
-			return;
-		}
-		callback(item);
+exports.update = function(id, name, callback) {
+	Item.findByIdAndUpdate(id, {"name": name}, function(err, item){
+		return callback(err, item);
 	});
 };
 
 //delete item from db
-exports.delete = function(name, callback, errback) {
-	Item.findAndRemove({name: name}, function(err, result){
-		if (err) {
-			errback(err);
-			return;
-		}
-		
+exports.delete = function(id, callback) {
+	Item.findByIdAndRemove(id, function(err, result){
+		return callback(err, result)
 	});
 };
