@@ -22,7 +22,7 @@ router.post('/items', function(req, res){
 		});
 });
 
-router.put('/items/:id', jsonParser, function(req, res){ 
+router.put('/items/:id', function(req, res){ 
 	Item.update(req.params.id, req.body.name, function(err, item){
 		if (err) {
 			return res.status(404).json(err);

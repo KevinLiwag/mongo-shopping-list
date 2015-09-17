@@ -15,15 +15,15 @@ exports.list = function(callback) {
 };
 
 //update item from db
-exports.update = function(name, callback) {
-	Item.findOneAndUpdate(id, {"name": name}, function(err, item){
+exports.update = function(id, name, callback) {
+	Item.findByIdAndUpdate(id, {"name": name}, function(err, item){
 		return callback(err, item);
 	});
 };
 
 //delete item from db
 exports.delete = function(id, callback) {
-	Item.findAndRemove(id, function(err, result) {
+	Item.findByIdAndRemove(id, function(err, result) {
 		return callback(err, result);
 	});
 };
