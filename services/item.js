@@ -23,23 +23,17 @@ exports.list = function(callback, errback) {
 };
 
 //update item from db
-exports.update = function(name, callback, errback) {
+exports.update = function(name, callback) {
 	Item.findOneAndUpdate({name: name}, function(err, item){
 		if (err) {
-			errback(err);
+			callback(err);
 			return;
-		}
+		};
 		callback(item);
 	});
 };
 
 //delete item from db
 exports.delete = function(name, callback, errback) {
-	Item.findAndRemove({name: name}, function(err, result){
-		if (err) {
-			errback(err);
-			return;
-		}
-		
-	});
+	Item.findAndRemove();
 };

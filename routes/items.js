@@ -3,31 +3,43 @@ var Item = require('../services/item');
 var router = express.Router();
 
 router.get('/items', function(req, res) {
-	Item.list(function(items){
-		res.json(items);
-	}, function(err) {
-		res.status(400).json(err);	
+	Item.list(function(err, items){
+		if (err) {
+			return res.status(400).json(err);
+		} 
+		
+		res.status(200).json(items);	
 	});
 });
 
 router.post('/items', function(req, res){
-	Item.save(req.body.name, function(item){
+	Item.save(req.body.name, function(err, item){
+		if (err) {
+			return res.status(400).json(err);
+		} 
+		
 		res.status(201).json(item);
-	}, function(err) {
-		res.status(400).json(err);
-	});
+		});
 });
 
 router.put('/items/:id', jsonParser, function(req, res){ 
-	Item.update(req.body.name, function(item){
+	Item.update(req.params.id, req.body.name, function(err, item){
+		if (err) {
+			return res.status(404).json(err);
+		}
+		
 		res.status(202).json(item);
-	}, function(err) {
-		res.status(404).json(err);
 	});
 });
 	
 router.delete('/items/:id', function(req, res){
-	Item.delete()
+	Item.delete(req.params.id, function(err, deleted){
+		if (err) {
+			return res.status(404).json(err);
+		}
+		
+		return res.status(200).json(deleted);
+	});
 });
 
 module.exports = router;
