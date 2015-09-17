@@ -25,5 +25,5 @@ exports.update = function(name, callback) {
 exports.delete = function(id, callback) {
 	Item.findAndRemove(id, function(err, result) {
 		return callback(err, result);
-	};
+	});
 };
