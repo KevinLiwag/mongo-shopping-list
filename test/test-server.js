@@ -11,10 +11,20 @@ var app = server.app;
 
 chai.use(chaiHttp);
 
+var ID = {};
+
 describe('Shopping List', function() {
 	before(function(done){
 		seed.run(function() {
-			console.log(seed.run);	//fix this		
+
+				
+			Item.findOne({'name': 'Tomatoes'}, function(err, item){
+				if (err) return err;
+
+				ID = item._id;
+				typeof ID;
+			});
+
 			done();
 		});
 	});
@@ -55,30 +65,32 @@ describe('Shopping List', function() {
 				res.body.name.should.equal('Kale');
 				//It should test what's on the MongoDB side
 				Item.findById(res.body._id, function(err, foundItem){
+					should.equal(err, null);
 					foundItem.should.be.a('object');
 					foundItem.should.have.property('_id');
 					foundItem.should.have.property('name');
-					foundItem._id.should.be.a('string');
+					foundItem._id.should.be.a('object');
 					foundItem.name.should.be.a('string');
 					foundItem.name.should.equal('Kale');
 				});
 				
 				done();
-			})
+			});
 	});
 	it('should edit an item on PUT', function(done){
 		chai.request(app)
-			.put('/items/1')
+			.put('/items/' + ID)
 			.send({'name' : 'Spinach'})
 			.end(function(err, res){
 				should.equal(err, null);
-				res.should.have.status(404);
+				res.should.have.status(202);
 				//It should test what's on the MongoDB side
 				Item.findById(res.body._id, function(err, foundItem){
+					should.equal(err, null);
 					foundItem.should.be.a('object');
 					foundItem.should.have.property('_id');
 					foundItem.should.have.property('name');
-					foundItem._id.should.be.a('string');
+					foundItem._id.should.be.a('object');
 					foundItem.name.should.be.a('string');
 					foundItem.name.should.equal('Spinach');
 				});
@@ -88,12 +100,10 @@ describe('Shopping List', function() {
 	});
 	it('should delete an item on DELETE', function(done){
 		chai.request(app)
-			.delete('/items/2')
+			.delete('/items/' + ID)
 			.end(function(err, res){
-				/*should.equal(err, null);
+				should.equal(err, null);
 				res.should.have.status(200);
-				storage.items.should.be.a('array');
-				storage.items.should.have.length(3);*/
 				done();
 			});
 	});
